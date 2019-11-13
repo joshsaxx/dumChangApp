@@ -19,7 +19,14 @@ class Groups {
 
     String getGroupName(){ return groupName;}
 
+    String getMembers(){ return members;}
+
+    String getDate(){ return date;}
+
     String getGroupType(){return groupType;}
 
     public int getImageID(){return imageID;}
+
+    public void add(Groups group) {
+    }
 }

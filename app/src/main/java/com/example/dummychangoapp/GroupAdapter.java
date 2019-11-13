@@ -11,11 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
     private ArrayList<Groups> mGroupData;
     private Context mContext;
+
+
 
     public GroupAdapter(Context mContext, ArrayList<Groups> GroupData) {
         this.mGroupData = GroupData;
@@ -24,17 +28,21 @@ class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GroupAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.activity_main_item,parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull GroupAdapter.ViewHolder holder, int position) {
         // Get current group.
-        Groups currentGroup = mGroupData.get(position);
+        Groups group = mGroupData.get(position);
+        holder.groupName.setText(group.getGroupName());
+        holder.groupType.setText(group.getGroupType());
+        holder.members.setText(group.getMembers());
+        holder.date.setText(group.getDate());
 
         // Populate the textviews with data.
-        holder.bindTo(currentGroup);
+
 
     }
 
@@ -45,25 +53,29 @@ class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
 
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView groupName;
-        private TextView members;
-        private TextView groupType;
+
+        private TextView groupName,members ,groupType, date;
         private ImageView groupImage;
-        private EditText date;
 
 
-        public ViewHolder(View itemView) {
+
+        ViewHolder(View itemView) {
             super(itemView);
 
             groupName = itemView.findViewById(R.id.textViewGroupName);
+            groupType = itemView.findViewById(R.id.textViewGroupType);
             members = itemView.findViewById(R.id.textViewMembers);
-            groupImage = itemView.findViewById(R.id.imageView2);
+            groupImage = itemView.findViewById(R.id.groupImage);
+            date = itemView.findViewById(R.id.textViewDate);
+        }
+        void bindTo(Groups currentGroup){
+            // Populate the textviews with data.
+            groupName.setText(currentGroup.getGroupName());
+            groupType.setText(currentGroup.getGroupType());
+            Glide.with(mContext).load(currentGroup.getImageID()).into(groupImage);
+
         }
 
-        public void bindTo(Groups currentSport) {
-            groupName.setText(currentSport.getGroupName());
-            groupType.setText(currentSport.getGroupType());
 
-        }
     }
 }
